@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h1>Daftar Siswa</h1>
+    <div class="header-actions">
+      <a href="{{ url_for('riwayat_admin') }}" class="btn btn-secondary">Riwayat Transaksi</a>
+      <a href="{{ url_for('tambah_siswa') }}" class="btn">+ Tambah Siswa</a>
+    </div>
+  </div>
+
+  <p class="total">Total tabungan seluruh siswa: <strong>{{ total | rupiah }}</strong></p>
+
+  {% if daftar_siswa %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>NIS</th>
+          <th>Kelas</th>
+          <th>Username</th>
+          <th>Saldo</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in daftar_siswa %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ s.nama }}</td>
+          <td>{{ s.nis }}</td>
+          <td>{{ s.kelas }}</td>
+          <td>{{ s.username }}</td>
+          <td>{{ s.saldo | rupiah }}</td>
+          <td>
+            <div class="aksi">
+              <a href="{{ url_for('transaksi_siswa', siswa_id=s.id) }}"
+                 class="btn btn-small">Setor / Tarik</a>
+              <form method="POST"
+                    action="{{ url_for('hapus_siswa', siswa_id=s.id) }}"
+                    onsubmit="return confirm('Hapus siswa ini? Riwayat transaksinya juga ikut terhapus.');">
+                <button type="submit" class="btn btn-small btn-danger">Hapus</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>Belum ada siswa terdaftar.</p>
+  {% endif %}
+</div>
+{% endblock %}

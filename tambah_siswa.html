@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Tambah Siswa{% endblock %}
+
+{% block content %}
+<div class="card form-card">
+  <h1>Tambah Siswa</h1>
+  <form method="POST">
+    <label for="nama">Nama lengkap</label>
+    <input type="text" id="nama" name="nama" value="{{ form.get('nama', '') }}" required autofocus>
+
+    <label for="nis">NIS</label>
+    <input type="text" id="nis" name="nis" value="{{ form.get('nis', '') }}" required>
+
+    <label for="kelas">Kelas</label>
+    <input type="text" id="kelas" name="kelas" value="{{ form.get('kelas', '') }}" required>
+
+    <label for="username">Username (untuk login)</label>
+    <input type="text" id="username" name="username" value="{{ form.get('username', '') }}" required>
+
+    <label for="password">Password (minimal 6 karakter)</label>
+    <input type="password" id="password" name="password" required>
+
+    <div class="form-actions">
+      <button type="submit" class="btn">Simpan</button>
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Batal</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

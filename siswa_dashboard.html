@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Siswa{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>Data Diri</h1>
+  <p><strong>Nama:</strong> {{ siswa.nama }}</p>
+  <p><strong>NIS:</strong> {{ siswa.nis }}</p>
+  <p><strong>Kelas:</strong> {{ siswa.kelas }}</p>
+  <div class="saldo-box">Saldo tabungan: <strong>{{ siswa.saldo | rupiah }}</strong></div>
+</div>
+
+<div class="card section">
+  <h2>Setor Tabungan</h2>
+  <form method="POST">
+    <label for="jumlah">Jumlah setoran (Rp)</label>
+    <input type="number" id="jumlah" name="jumlah" min="1" step="1" required>
+    <button type="submit" class="btn">Setor</button>
+  </form>
+</div>
+
+<div class="card section">
+  <h2>Riwayat Transaksi</h2>
+  {% if riwayat %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Waktu</th><th>Jenis</th><th>Jumlah</th></tr>
+      </thead>
+      <tbody>
+        {% for r in riwayat %}
+        <tr>
+          <td>{{ r.waktu }}</td>
+          <td><span class="badge badge-{{ r.jenis }}">{{ r.jenis | capitalize }}</span></td>
+          <td>{{ r.jumlah | rupiah }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>Belum ada transaksi.</p>
+  {% endif %}
+</div>
+{% endblock %}
